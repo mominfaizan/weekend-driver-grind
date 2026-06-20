@@ -1,6 +1,7 @@
 obj-m += hello.o
 
 KDIR := ../resource/kernel-source
+
 PWD := $(shell pwd)
 
 all:
