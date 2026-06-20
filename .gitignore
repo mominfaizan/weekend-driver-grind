@@ -1,1 +1,17 @@
 resource/kernel-source/
+
+# kernel build artifacts
+*.o
+*.ko
+*.mod*
+*.cmd
+Module.symvers
+modules.order
+*.order
+*.mod.c
+
+# kernel build directories
+*.tmp_versions/
+*.dwo
+*.su
+*.o.d
