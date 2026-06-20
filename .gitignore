@@ -15,3 +15,6 @@ modules.order
 *.dwo
 *.su
 *.o.d
+
+rootfs/
+initramfs.cpio.gz
