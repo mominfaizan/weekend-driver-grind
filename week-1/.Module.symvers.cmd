@@ -1,1 +1,0 @@
-savedcmd_Module.symvers :=  /home/faizanmomin/weekend-driver-grind/resource/kernel-source/scripts/mod/modpost -M          -o Module.symvers -T modules.order -i /home/faizanmomin/weekend-driver-grind/resource/kernel-source/Module.symvers -e 

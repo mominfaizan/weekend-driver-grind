@@ -1,1 +1,0 @@
-savedcmd_hello.ko := ld -r -m elf_x86_64 --fatal-warnings -z noexecstack --build-id=sha1  -T /home/faizanmomin/weekend-driver-grind/resource/kernel-source/scripts/module.lds -o hello.ko hello.o hello.mod.o .module-common.o
