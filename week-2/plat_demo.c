@@ -2,15 +2,38 @@
 #include <linux/platform_device.h>
 #include <linux/of.h>
 
-static struct platform_device *pdev;
+static struct platform_device *pdev; //just for when we are not using dts and registering the platform device manually in the init function
+
+struct plat_demo_private {
+    int value;
+    char name[32];
+};
 
 static int plat_demo_probe(struct platform_device *pdev) {
-    pr_info("device probe : %s\n", pdev->name);
+    struct plat_demo_private *priv;
+    pr_info("device probe : %s\n", dev_name(&pdev->dev));
+
+    priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
+    if (!priv)
+        return -ENOMEM;
+
+    priv->value = 100;
+    strscpy(priv->name, "Platform Demo", sizeof(priv->name));
+
+    platform_set_drvdata(pdev, priv);
+
+    pr_info("private data allocated\n");
+
     return 0;
 }
 static void plat_demo_remove(struct platform_device *pdev)
 {
-    pr_info("device removed : %s\n", pdev->name);
+    struct plat_demo_private *priv;
+    priv = platform_get_drvdata(pdev);
+
+    pr_info("device removed\n");
+    pr_info("value = %d\n", priv->value);
+    pr_info("name = %s\n", priv->name);
 }
 static const struct of_device_id plat_demo_match[] = {
     {
