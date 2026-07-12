@@ -18,3 +18,5 @@ modules.order
 
 rootfs/
 initramfs.cpio.gz
+resource/busybox/
+resource/linux/
