@@ -1,0 +1,20 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+
+    fragment@0 {
+
+        target-path = "/";
+
+        __overlay__ {
+
+            demo_device: demo@0 {
+
+                compatible = "demo,platform";
+
+                status = "okay";
+            };
+        };
+    };
+};

@@ -2,16 +2,16 @@
 #include <linux/platform_device.h>
 #include <linux/of.h>
 
-static struct platform_device *pdev; //just for when we are not using dts and registering the platform device manually in the init function
-
 struct plat_demo_private {
     int value;
     char name[32];
 };
 
-static int plat_demo_probe(struct platform_device *pdev) {
+static int plat_demo_probe(struct platform_device *pdev)
+{
     struct plat_demo_private *priv;
-    pr_info("device probe : %s\n", dev_name(&pdev->dev));
+
+    dev_info(&pdev->dev, "Probe called\n");
 
     priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
     if (!priv)
@@ -22,19 +22,20 @@ static int plat_demo_probe(struct platform_device *pdev) {
 
     platform_set_drvdata(pdev, priv);
 
-    pr_info("private data allocated\n");
+    dev_info(&pdev->dev, "Private data allocated\n");
 
     return 0;
 }
+
 static void plat_demo_remove(struct platform_device *pdev)
 {
-    struct plat_demo_private *priv;
-    priv = platform_get_drvdata(pdev);
+    struct plat_demo_private *priv = platform_get_drvdata(pdev);
 
-    pr_info("device removed\n");
-    pr_info("value = %d\n", priv->value);
-    pr_info("name = %s\n", priv->name);
+    dev_info(&pdev->dev, "Removing driver\n");
+    dev_info(&pdev->dev, "value=%d\n", priv->value);
+    dev_info(&pdev->dev, "name=%s\n", priv->name);
 }
+
 static const struct of_device_id plat_demo_match[] = {
     {
         .compatible = "demo,platform",
@@ -43,10 +44,9 @@ static const struct of_device_id plat_demo_match[] = {
 };
 
 MODULE_DEVICE_TABLE(of, plat_demo_match);
-static struct platform_driver plat_demo_driver = {
-    
-    .probe = plat_demo_probe,
 
+static struct platform_driver plat_demo_driver = {
+    .probe  = plat_demo_probe,
     .remove = plat_demo_remove,
     .driver = {
         .name = "plat_demo",
@@ -54,30 +54,7 @@ static struct platform_driver plat_demo_driver = {
     },
 };
 
-static int __init plat_demo_init(void) {
-   //now we are not using dts beacuse of qemu so we will register the platform device and driver manually if we use dts then no need to add this code block
-   //from here
-   pr_info("plat_demo_init\n");
-   pdev = platform_device_register_simple("plat_demo", -1, NULL, 0);
-   if (IS_ERR(pdev)) {
-       pr_err("Failed to register platform device\n");
-       return PTR_ERR(pdev);
-    }
-    //till now.
-
-    // Register the platform driver
-    return platform_driver_register(&plat_demo_driver);
-}
-
-static void __exit plat_demo_exit(void) {
-    pr_info("plat_demo_exit\n");
-    platform_driver_unregister(&plat_demo_driver);
-    // when not using dts then we need to unregister the platform device manually
-    platform_driver_unregister(&plat_demo_driver);
-
-}
-module_init(plat_demo_init);
-module_exit(plat_demo_exit);
+module_platform_driver(plat_demo_driver);
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Faizan Momin");
