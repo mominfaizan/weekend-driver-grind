@@ -13,6 +13,7 @@ modules.order
 # kernel build directories
 *.tmp_versions/
 *.dwo
+*.dtbo
 *.su
 *.o.d
 .module-common.o
