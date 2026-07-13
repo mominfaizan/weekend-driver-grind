@@ -1,0 +1,4 @@
+demo@0 {
+    compatible = "demo,platform";
+    status = "okay";
+};
