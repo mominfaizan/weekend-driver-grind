@@ -388,22 +388,8 @@
 		stdout-path = "/pl011@9000000";
 		kaslr-seed = <0xcd5f7c4c 0xc2513edf>;
 	};
-	demo@0 {
-    		compatible = "demo,platform";
-    		status = "okay";
-	};
-
-	demo@10000000{
-           compatible= "demo,plat";
-           status ="okay";
-	   reg = <0x0 0x10000000 0x0 0x1000>;
-	};
-	
-	pl011_demo@9000000 {
-    	  compatible = "demo,pl011";
-    	  reg = <0x0 0x09000000 0x0 0x1000>;
-   	  interrupts = <0x0 0x1 0x4>;
-   	  status = "okay";
-	};
-
+demo@0 {
+    compatible = "demo,platform";
+    status = "okay";
+};
 };
