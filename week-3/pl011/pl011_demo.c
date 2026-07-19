@@ -105,7 +105,14 @@ static int pl011_demo_probe(struct platform_device *pdev)
 
 static void pl011_demo_remove(struct platform_device *pdev)
 {
-    pr_info("PL011 Demo Remove\n");
+    struct pl011_demo_priv *priv = platform_get_drvdata(pdev);
+    pr_info("========== PL011 Demo Remove ==========\n");
+
+    if (priv) {
+        pr_info("Removing driver\n");
+        pr_info("Virtual Address : %p\n", priv->base);
+        pr_info("IRQ Number      : %d\n", priv->irq);
+    }
 }
 
 static const struct of_device_id pl011_demo_match[] = {
